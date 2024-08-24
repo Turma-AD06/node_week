@@ -1,7 +1,9 @@
-import { Module } from '@nestjs/common';
+import { UserRepository } from './repositories/contracts/user.repository';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-
+import { UserRepositoryImpl } from './repositories/user-repository-impl';
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,6 +20,12 @@ import { ConfigModule } from '@nestjs/config';
       synchronize: true,
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: UserRepository,
+      useClass: UserRepositoryImpl,
+    },
+  ],
+  exports: [UserRepository],
 })
 export class DatabaseModule {}
