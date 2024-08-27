@@ -3,6 +3,7 @@ import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserRepositoryImpl } from './repositories/user-repository-impl';
+import { User } from './entities/user.entity';
 @Global()
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserRepositoryImpl } from './repositories/user-repository-impl';
       entities: [__dirname.concat('/entities/*.entity{.ts,.js}')],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([User]),
   ],
   providers: [
     {
