@@ -39,6 +39,7 @@ export class UsersServiceImpl extends UsersService {
 
   async createUser(dto: CreateUserDto): Promise<UserDto> {
     const user: User = UserMapper.toEntity(dto);
+    user.password = await this.passwordEncoder.encode(dto.password);
     const userSaved = await this.userRepository.createUser(user);
     return new UserDto(userSaved);
   }
