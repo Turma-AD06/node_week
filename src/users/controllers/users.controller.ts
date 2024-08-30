@@ -13,8 +13,9 @@ import { UsersService } from '../services/contract/users.service';
 import { UserDto } from '../dtos/user.dto';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { CreateUserDoc } from './docs/create-user.doc';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from '../dtos/update-user.dto';
+import { JwtAuth } from 'src/shared/decorators/jwt-auth';
 
 @Controller('/v1/users')
 @ApiTags('Usuários')
@@ -25,6 +26,8 @@ export class UsersController {
   ) {}
 
   @Get()
+  @JwtAuth()
+  @ApiBearerAuth()
   public async getAll(): Promise<UserDto[]> {
     return this.userService.getAllUsers();
   }

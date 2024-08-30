@@ -4,6 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserRepositoryImpl } from './repositories/user-repository-impl';
 import { User } from './entities/user.entity';
+import { Role } from './entities/role.entity';
+import { DbSeed } from './seed/db.seed';
+import { RoleSeed } from './seed/role.seed';
+import { RoleRepository } from './repositories/contracts/role.repository';
+import { RoleRepositoryImpl } from './repositories/role-repository-impl';
+import { SeedCommand } from './commands/seed.command';
 @Global()
 @Module({
   imports: [
@@ -20,13 +26,20 @@ import { User } from './entities/user.entity';
       entities: [__dirname.concat('/entities/*.entity{.ts,.js}')],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Role]),
   ],
   providers: [
+    {
+      provide: RoleRepository,
+      useClass: RoleRepositoryImpl,
+    },
     {
       provide: UserRepository,
       useClass: UserRepositoryImpl,
     },
+    SeedCommand,
+    DbSeed,
+    RoleSeed,
   ],
   exports: [UserRepository],
 })

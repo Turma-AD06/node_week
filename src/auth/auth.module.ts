@@ -3,6 +3,7 @@ import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/contracts/auth.service';
 import { AuthServiceImpl } from './services/auth-service-impl';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './strategy/jwt.strategy';
 
 @Global()
 @Module({
@@ -16,6 +17,7 @@ import { JwtModule } from '@nestjs/jwt';
   ],
   controllers: [AuthController],
   providers: [
+    JwtStrategy,
     {
       provide: AuthService,
       useClass: AuthServiceImpl,
