@@ -10,6 +10,9 @@ import { RoleSeed } from './seed/role.seed';
 import { RoleRepository } from './repositories/contracts/role.repository';
 import { RoleRepositoryImpl } from './repositories/role-repository-impl';
 import { SeedCommand } from './commands/seed.command';
+import { Product } from './entities/product.entity';
+import { ProductRepository } from './repositories/contracts/product.repository';
+import { ProductRepositoryImpl } from './repositories/product-repository-impl';
 @Global()
 @Module({
   imports: [
@@ -26,12 +29,16 @@ import { SeedCommand } from './commands/seed.command';
       entities: [__dirname.concat('/entities/*.entity{.ts,.js}')],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User, Role]),
+    TypeOrmModule.forFeature([User, Role, Product]),
   ],
   providers: [
     {
       provide: RoleRepository,
       useClass: RoleRepositoryImpl,
+    },
+    {
+      provide: ProductRepository,
+      useClass: ProductRepositoryImpl,
     },
     {
       provide: UserRepository,
@@ -41,6 +48,6 @@ import { SeedCommand } from './commands/seed.command';
     DbSeed,
     RoleSeed,
   ],
-  exports: [UserRepository],
+  exports: [UserRepository, ProductRepository],
 })
 export class DatabaseModule {}
