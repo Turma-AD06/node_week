@@ -1,4 +1,11 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Inject,
+  Post,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../services/contracts/auth.service';
 import { BodyValidated } from 'src/shared/decorators/body-validated';
@@ -6,7 +13,7 @@ import { AuthRequestDto } from '../dto/auth-request.dto';
 import { LoginDoc } from './docs/login.doc';
 
 @ApiTags('Autenticação')
-@Controller('auth')
+@Controller('/v1/auth')
 export class AuthController {
   constructor(
     @Inject()
@@ -16,6 +23,7 @@ export class AuthController {
   @Post()
   @LoginDoc()
   @BodyValidated()
+  @HttpCode(HttpStatus.CREATED)
   async auth(@Body() auth: AuthRequestDto) {
     return this.authService.login(auth);
   }

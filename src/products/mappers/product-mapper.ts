@@ -8,6 +8,7 @@ export class ProductMapper {
     product.name = dto.name;
     product.description = dto.description;
     product.price = dto.price;
+    product.user = dto.user;
     product.score = dto.score;
     return product;
   }

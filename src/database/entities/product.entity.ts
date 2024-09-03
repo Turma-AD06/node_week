@@ -6,13 +6,13 @@ import { User } from './user.entity';
 export class Product extends BaseEntity {
   @Column()
   name: string;
-  @Column()
+  @Column({ nullable: true })
   description: string;
   @Column()
   price: number;
-  @Column()
+  @Column({ nullable: true })
   image: string;
-  @Column()
+  @Column('decimal', { precision: 10, scale: 2 })
   score: number;
 
   @ManyToOne(() => User, (user) => user.products)

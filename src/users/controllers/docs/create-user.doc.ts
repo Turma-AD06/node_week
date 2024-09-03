@@ -21,7 +21,7 @@ export const CreateUserDoc = () =>
             description: 'E-mail do usuário',
             default: 'mrlaulau@gmail.com',
           },
-          passowrd: {
+          password: {
             type: 'string',
             description: 'Senha do usuário',
             default: '123456789',

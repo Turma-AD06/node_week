@@ -1,7 +1,7 @@
 import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductDto {
-  user_id: number;
+  user?: any;
   @IsString()
   @IsNotEmpty()
   name: string;

@@ -3,7 +3,7 @@ import { ApiOkResponse, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Response } from 'express';
 
 @ApiTags('health check')
-@Controller()
+@Controller('/v1')
 export class AppController {
   @ApiOperation({
     description: 'Verifica se a api foi inicializada com sucesso.',

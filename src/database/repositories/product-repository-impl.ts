@@ -20,12 +20,19 @@ export class ProductRepositoryImpl extends ProductRepository {
     return this.findById(id);
   }
   findById(id: number): Promise<Product | null> {
-    return this.productRepository.findOneBy({ id });
+    return this.productRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
   }
+
   async delete(id: number): Promise<void> {
     await this.productRepository.delete({ id });
   }
+
   findAll(): Promise<Product[]> {
-    return this.productRepository.find();
+    return this.productRepository.find({
+      relations: ['user'],
+    });
   }
 }

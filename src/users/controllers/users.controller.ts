@@ -3,6 +3,8 @@ import {
   Inject,
   Get,
   Body,
+  HttpCode,
+  HttpStatus,
   Post,
   ValidationPipe,
   UsePipes,
@@ -28,11 +30,13 @@ export class UsersController {
   @Get()
   @JwtAuth()
   @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
   public async getAll(): Promise<UserDto[]> {
     return this.userService.getAllUsers();
   }
 
   @Put(':id')
+  @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
@@ -43,6 +47,7 @@ export class UsersController {
   @Post()
   @UsePipes(new ValidationPipe())
   @CreateUserDoc()
+  @HttpCode(HttpStatus.CREATED)
   public async create(@Body() body: CreateUserDto): Promise<UserDto> {
     return this.userService.createUser(body);
   }
