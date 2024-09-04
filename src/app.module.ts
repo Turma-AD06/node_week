@@ -2,15 +2,20 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
-import { ValueIsUnique } from './shared/validations/value-is-unique';
 import { AuthModule } from './auth/auth.module';
 import { CommandModule } from 'nestjs-command';
 import { ProductsModule } from './products/products.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
-  imports: [DatabaseModule, UsersModule, AuthModule, CommandModule, ProductsModule],
+  imports: [
+    DatabaseModule,
+    UsersModule,
+    AuthModule,
+    CommandModule,
+    ProductsModule,
+    SharedModule,
+  ],
   controllers: [AppController],
-  providers: [ValueIsUnique],
-  exports: [ValueIsUnique],
 })
 export class AppModule {}

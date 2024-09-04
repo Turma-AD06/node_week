@@ -5,6 +5,7 @@ import { CreateProductDto } from '../dto/create-product.dto';
 import { ProductDto } from '../dto/product.dto';
 import { ProductMapper } from '../mappers/product-mapper';
 import { UpdateProductDto } from '../dto/update-product.dto';
+import { unlink } from 'fs/promises';
 
 @Injectable()
 export class ProductServiceImpl extends ProductService {
@@ -22,12 +23,20 @@ export class ProductServiceImpl extends ProductService {
     return new ProductDto(productSaved);
   }
 
-  async update(id: number, product: UpdateProductDto): Promise<ProductDto> {
-    await this.getById(id);
+  async update(id: number, dto: UpdateProductDto): Promise<ProductDto> {
+    const product = await this.getById(id);
+
+    if (dto.image && product.image) {
+      try {
+        await unlink(product.image);
+      } catch (e: any) {
+        console.log('Erro', e);
+      }
+    }
 
     const productUpdated = await this.productRepository.update(
       id,
-      ProductMapper.updateToEntity(product),
+      ProductMapper.updateToEntity(dto),
     );
     return new ProductDto(productUpdated);
   }
@@ -42,7 +51,7 @@ export class ProductServiceImpl extends ProductService {
 
   async getAll(): Promise<ProductDto[]> {
     const products = await this.productRepository.findAll();
-    console.log(products);
+
     return products.map((product) => new ProductDto(product));
   }
 

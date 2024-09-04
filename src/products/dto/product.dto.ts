@@ -6,8 +6,9 @@ export class ProductDto {
   name: string;
   description: string;
   price: number;
-  image: string;
+  image?: string;
   score: number;
+  imageUrl?: string;
 
   constructor(product: Product) {
     this.id = product.id;
@@ -17,5 +18,8 @@ export class ProductDto {
     this.image = product.image;
     this.price = product.price;
     this.score = product.score;
+    if (product.image) {
+      this.imageUrl = `http://127.0.0.1:3000/${product.image.replace('public/', '')}`;
+    }
   }
 }

@@ -10,6 +10,7 @@ export class ProductMapper {
     product.price = dto.price;
     product.user = dto.user;
     product.score = dto.score;
+    product.image = dto.image;
     return product;
   }
 
@@ -18,6 +19,7 @@ export class ProductMapper {
     product.name = dto.name;
     product.description = dto.description;
     product.price = dto.price;
+    product.image = dto.image;
     product.score = dto.score;
     return product;
   }
